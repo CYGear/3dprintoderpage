@@ -150,6 +150,12 @@
         </form>
     </div>
 
+    <!-- Google Form Embed -->
+    <div class="form-container" id="googleFormContainer" style="display:none;">
+        <h2>Order Submission</h2>
+        <iframe src="YOUR_GOOGLE_FORM_EMBED_URL" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 3D Printing Business | All rights reserved</p>
@@ -161,6 +167,7 @@
         let cartList = document.getElementById('cartList');
         let cartContainer = document.getElementById('cartContainer');
         let checkoutForm = document.getElementById('checkoutForm');
+        let googleFormContainer = document.getElementById('googleFormContainer');
         let cartCount = 0;
 
         function addToCart(productName, price) {
@@ -193,14 +200,13 @@
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
 
-            // Send order to Google Sheets
+            // Send order to Google Sheets (via Google Forms)
             const orderDetails = {
                 firstName,
                 lastName,
                 items: cart.map(item => `${item.productName} - $${item.price}`).join(', ')
             };
 
-            // Here, you would submit the order details to Google Sheets (via Google Forms or Google Apps Script)
             console.log('Order Submitted:', orderDetails);
 
             // Reset cart after submission
@@ -209,6 +215,7 @@
             cartButton.textContent = 'Cart (0)';
             cartContainer.style.display = 'none';
             checkoutForm.style.display = 'none';
+            googleFormContainer.style.display = 'block';
         }
     </script>
 
