@@ -16,29 +16,6 @@
             color: white;
             padding: 20px;
             text-align: center;
-            position: relative;
-        }
-        .cart-button {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .cart-container {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 20px;
-            width: 300px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .product-container {
             display: flex;
@@ -86,9 +63,6 @@
             width: 100%;
             bottom: 0;
         }
-        #checkoutForm {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -96,15 +70,7 @@
     <header>
         <h1>Welcome to My 3D Printing Business</h1>
         <p>Here you can view and order 3D printed products!</p>
-        <button class="cart-button" onclick="toggleCart()">Cart (0)</button>
     </header>
-
-    <!-- Cart Container -->
-    <div class="cart-container" id="cartContainer">
-        <h3>Your Cart</h3>
-        <ul id="cartList"></ul>
-        <button onclick="checkout()">Checkout</button>
-    </div>
 
     <!-- Product Listings -->
     <div class="product-container">
@@ -113,41 +79,28 @@
             <img src="product1.jpg" alt="Product 1">
             <h2>Product 1</h2>
             <p>Price: $10.00</p>
-            <button onclick="addToCart('Product 1', 10)">Add to Cart</button>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog&entry.2005620554=Product%201&entry.839337160=Price%3A%20$10.00" target="_blank">
+                <button>Order Now</button>
+            </a>
         </div>
         <!-- Product 2 -->
         <div class="product">
             <img src="product2.jpg" alt="Product 2">
             <h2>Product 2</h2>
             <p>Price: $15.00</p>
-            <button onclick="addToCart('Product 2', 15)">Add to Cart</button>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog&entry.2005620554=Product%202&entry.839337160=Price%3A%20$15.00" target="_blank">
+                <button>Order Now</button>
+            </a>
         </div>
         <!-- Product 3 -->
         <div class="product">
             <img src="product3.jpg" alt="Product 3">
             <h2>Product 3</h2>
             <p>Price: $20.00</p>
-            <button onclick="addToCart('Product 3', 20)">Add to Cart</button>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog&entry.2005620554=Product%203&entry.839337160=Price%3A%20$20.00" target="_blank">
+                <button>Order Now</button>
+            </a>
         </div>
-    </div>
-
-    <!-- Checkout Form -->
-    <div class="form-container" id="checkoutForm">
-        <h2>Checkout</h2>
-        <form id="checkoutFormSubmit" onsubmit="submitOrder(event)">
-            <label for="firstName">First Name:</label><br>
-            <input type="text" id="firstName" name="firstName" required><br><br>
-            <label for="lastName">Last Name:</label><br>
-            <input type="text" id="lastName" name="lastName" required><br><br>
-            <button type="submit">Place Order</button>
-        </form>
-    </div>
-
-    <!-- Google Form Embed for Order Details -->
-    <div class="form-container" id="googleFormContainer">
-        <h2>Order Submission</h2>
-        <!-- Google Form for order submission -->
-        <iframe id="googleFormIframe" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
 
     <!-- Footer -->
@@ -155,68 +108,8 @@
         <p>&copy; 2025 3D Printing Business | All rights reserved</p>
     </footer>
 
-    <script>
-        let cart = [];
-        let cartButton = document.querySelector('.cart-button');
-        let cartList = document.getElementById('cartList');
-        let cartContainer = document.getElementById('cartContainer');
-        let checkoutForm = document.getElementById('checkoutForm');
-        let googleFormContainer = document.getElementById('googleFormContainer');
-        let cartCount = 0;
-
-        // Add products to cart
-        function addToCart(productName, price) {
-            cart.push({ productName, price });
-            cartCount++;
-            cartButton.textContent = `Cart (${cartCount})`;
-            updateCart();
-        }
-
-        // Toggle the visibility of the cart
-        function toggleCart() {
-            cartContainer.style.display = cartContainer.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Update the cart list
-        function updateCart() {
-            cartList.innerHTML = '';
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.productName} - $${item.price}`;
-                cartList.appendChild(li);
-            });
-        }
-
-        // Proceed to checkout
-        function checkout() {
-            cartContainer.style.display = 'none';
-            checkoutForm.style.display = 'block';
-        }
-
-        // Handle checkout form submission
-        function submitOrder(event) {
-            event.preventDefault();
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-
-            // Format the cart items into a string
-            const orderDetails = cart.map(item => `${item.productName} - $${item.price}`).join(', ');
-
-            // Generate the Google Form URL with pre-filled fields
-            const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog&entry.2005620554=${encodeURIComponent(firstName)}&entry.1045781291=${encodeURIComponent(lastName)}&entry.839337160=${encodeURIComponent(orderDetails)}`;
-
-            // Display the Google Form with the pre-filled data
-            document.getElementById('googleFormIframe').src = googleFormUrl;
-
-            // Reset cart and display the Google Form
-            cart = [];
-            cartCount = 0;
-            cartButton.textContent = 'Cart (0)';
-            cartContainer.style.display = 'none';
-            checkoutForm.style.display = 'none';
-            googleFormContainer.style.display = 'block';
-        }
-    </script>
+</body>
+</html>
 
 </body>
 </html>
