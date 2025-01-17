@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Print Orders</title>
+    <title>3D Printing Business</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,16 +89,13 @@
         #checkoutForm {
             display: none;
         }
-        #googleFormContainer {
-            display: none;
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Order prints in stock</h1>
-        <p>Or upload your own model</p>
+        <h1>Welcome to My 3D Printing Business</h1>
+        <p>Here you can view and order 3D printed products!</p>
         <button class="cart-button" onclick="toggleCart()">Cart (0)</button>
     </header>
 
@@ -134,12 +131,6 @@
         </div>
     </div>
 
-    <!-- 3D Model Upload Form (Google Form) -->
-    <div class="form-container">
-        <h2>Upload Your 3D Model (STL file)</h2>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeDNjMt24-6cj3lq2xeAdu-R3eK4PkHUn2GYNO5Kbxam8kVIQ/viewform?usp=header" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    </div>
-
     <!-- Checkout Form -->
     <div class="form-container" id="checkoutForm">
         <h2>Checkout</h2>
@@ -155,7 +146,8 @@
     <!-- Google Form Embed for Order Details -->
     <div class="form-container" id="googleFormContainer">
         <h2>Order Submission</h2>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        <!-- Google Form for order submission -->
+        <iframe id="googleFormIframe" width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
 
     <!-- Footer -->
@@ -172,6 +164,7 @@
         let googleFormContainer = document.getElementById('googleFormContainer');
         let cartCount = 0;
 
+        // Add products to cart
         function addToCart(productName, price) {
             cart.push({ productName, price });
             cartCount++;
@@ -179,10 +172,12 @@
             updateCart();
         }
 
+        // Toggle the visibility of the cart
         function toggleCart() {
             cartContainer.style.display = cartContainer.style.display === 'block' ? 'none' : 'block';
         }
 
+        // Update the cart list
         function updateCart() {
             cartList.innerHTML = '';
             cart.forEach(item => {
@@ -192,26 +187,28 @@
             });
         }
 
+        // Proceed to checkout
         function checkout() {
             cartContainer.style.display = 'none';
             checkoutForm.style.display = 'block';
         }
 
+        // Handle checkout form submission
         function submitOrder(event) {
             event.preventDefault();
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
 
-            // Send order to Google Sheets (via Google Forms)
-            const orderDetails = {
-                firstName,
-                lastName,
-                items: cart.map(item => `${item.productName} - $${item.price}`).join(', ')
-            };
+            // Format the cart items into a string
+            const orderDetails = cart.map(item => `${item.productName} - $${item.price}`).join(', ');
 
-            console.log('Order Submitted:', orderDetails);
+            // Generate the Google Form URL with pre-filled fields
+            const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog&entry.2005620554=${encodeURIComponent(firstName)}&entry.1045781291=${encodeURIComponent(lastName)}&entry.839337160=${encodeURIComponent(orderDetails)}`;
 
-            // Reset cart after submission
+            // Display the Google Form with the pre-filled data
+            document.getElementById('googleFormIframe').src = googleFormUrl;
+
+            // Reset cart and display the Google Form
             cart = [];
             cartCount = 0;
             cartButton.textContent = 'Cart (0)';
