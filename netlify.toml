@@ -1,9 +1,0 @@
-[build]
-  publish = "public"
-  command = "npm run build"  # or your build command if you have one
-
-[[redirects]]
-  from = "/upload"
-  to = "/"
-  status = 200
-  force = true
