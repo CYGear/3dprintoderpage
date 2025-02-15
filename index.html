@@ -4,73 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Print Order Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .order-button, .custom-print-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 20px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 20px;
-            margin-top: 20px;
-        }
-        .order-button:hover, .custom-print-button:hover {
-            background-color: #45a049;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        .custom-print-section {
-            margin-top: 50px;
-            text-align: center;
-        }
-        .custom-print-text {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <header>
-        <h1>3D print order page</h1>
-        <p>Click below to place an order!</p>
+        <h1>3D Print Order Page</h1>
+        <p>Click on a product for more details and to add it to your cart!</p>
     </header>
 
-    <!-- Order Button -->
-    <div style="text-align: center; margin-top: 50px;">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVl6WPvsUeahuLYUUBHAQwe9tTiV-xfyS9_s8_suTSy04fkA/viewform?usp=dialog" target="_blank">
-            <button class="order-button">Order Now</button>
-        </a>
+    <!-- Product Grid -->
+    <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product" data-id="1">
+            <img src="product1.jpg" alt="Product 1">
+            <h3>Product 1</h3>
+            <p>$20.00</p>
+        </div>
+        <!-- Product 2 -->
+        <div class="product" data-id="2">
+            <img src="product2.jpg" alt="Product 2">
+            <h3>Product 2</h3>
+            <p>$15.00</p>
+        </div>
+        <!-- Add more products here -->
     </div>
 
-    <!-- Custom Print Section -->
-    <div class="custom-print-section">
-        <p class="custom-print-text">
-            Have a custom design or need a unique print? Upload your 3D model and we'll print it for you!
-        </p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDNjMt24-6cj3lq2xeAdu-R3eK4PkHUn2GYNO5Kbxam8kVIQ/viewform?usp=dialog" target="_blank">
-            <button class="custom-print-button">Custom Print</button>
-        </a>
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <h2 id="productTitle"></h2>
+            <img id="productImage" src="" alt="" class="modal-image">
+            <p id="productDescription"></p>
+            <p><strong>Price:</strong> $<span id="productPrice"></span></p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" min="1" value="1">
+            <button id="addToCartButton">Add to Cart</button>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -78,5 +49,6 @@
         <p>&copy; 2025 3D Print Order Page | All rights reserved</p>
     </footer>
 
+    <script src="app.js"></script>
 </body>
 </html>
